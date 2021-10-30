@@ -33,7 +33,7 @@ class BoardTest {
         //then
         assertNotNull(square);
         assertEquals('a', square.getRow());
-        assertEquals('1', square.getCol());
+        assertEquals(1, square.getCol());
     }
 
     /**

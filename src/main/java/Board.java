@@ -12,15 +12,15 @@ public class Board {
      * @version etapa 2
      */
     public static Square getSquare(char row, int col) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return squares[calculateCoor(row)][calculateCoor(col)];
     }
 
-    /**
-     * Metoda provolá Board#createBoard() a Board#fillBoard().
-     * Výsledkem bude připavená hra.
-     *
-     * @author xnguye17
-     */
+    private static int calculateCoor(int coor) {
+        if (coor >= 'a' && coor <= 'h')
+            return coor-(int)'a';
+        return coor-1;
+    }
+
     public static void prepareGame(){
         createBoard();
         fillBoard();
@@ -33,11 +33,11 @@ public class Board {
      * @version etapa 2
      */
     public static void createBoard() {
+        squares = new Square[8][8];
     }
 
     public static void fillBoard() {
 
     }
-
 
 }
