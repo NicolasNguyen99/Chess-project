@@ -8,8 +8,8 @@ public class Piece {
     }
 
     /**
-     * Metoda podle typu figurky vrací možné tahy (políčka).
-     * @return pole dostupných políček.
+     * Metoda podle typu figurky vraci mozne tahy (policka).
+     * @return pole dostupnych policek.
      *
      * @author xnguye17
      * @version etapa 2
@@ -19,9 +19,9 @@ public class Piece {
     }
 
     /**
-     * Metoda přesune figurku na zvolené políčko.
-     * @param row je písmeno v rozsahu a - h.
-     * @param col je číslo v rozsahu 1 - 8.
+     * Metoda presune figurku na zvolene policko.
+     * @param row je pismeno v rozsahu a - h.
+     * @param col je cislo v rozsahu 1 - 8.
      *
      * @author xnguye17
      */

@@ -2,7 +2,7 @@ public class Game {
     private Player players[];
 
     /**
-     * Metoda vytvoří novou rozmístněnou šachovnici.
+     * Metoda vytvori novou rozmistnenou sachovnici.
      *
      * @author xnguye17
      */
@@ -11,22 +11,22 @@ public class Game {
     }
 
     /**
-     * Metoda, která kontroluje konec.
-     * Konec hry nastane, když hráč dostane mat, vzdá se nebo ve hře zůstanou poslední dvě figurky a žádná ze stran nemůže zvítězit.
-     * @return Boolean (true = konec hry, false = hra pokračuje)
+     * Metoda, ktera kontroluje konec.
+     * Konec hry nastane, kdyz hrac dostane mat, vzda se nebo ve hre zustanou posledni dve figurky a zadna ze stran nemuze zvitezit.
+     * @return Boolean (true = konec hry, false = hra pokracuje)
      *
      * @author xnguye17
      * @version etapa 2
      */
     public boolean isGameOver() {
-            throw new UnsupportedOperationException("Not implemented yet");
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /**
-     * Metoda přesune figurku na zvolené souřadnice (políčko).
-     * @param piece je figurka z jednoho možného typu PieceType.
-     * @param row je písmeno v rozsahu a - h.
-     * @param col je číslo v rozsahu 1 - 8.
+     * Metoda presune figurku na zvolene souradnice (policko).
+     * @param piece je figurka z jednoho mozneho typu PieceType.
+     * @param row je pismeno v rozsahu a - h.
+     * @param col je cislo v rozsahu 1 - 8.
      *
      * @author xnguye17
      */

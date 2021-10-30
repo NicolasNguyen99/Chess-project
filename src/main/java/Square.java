@@ -7,6 +7,20 @@ public class Square {
     public Square(char row, int col) {
         this.row = row;
         this.col = col;
+
+        if (row % 2 == 0) {
+            if (col % 2 == 0) {
+                this.squareColor = Color.BLACK;
+            } else {
+                this.squareColor = Color.WHITE;
+            }
+        } else {
+            if (col % 2 == 0) {
+                this.squareColor = Color.WHITE;
+            } else {
+                this.squareColor = Color.BLACK;
+            }
+        }
     }
 
     public void setPiece(Piece piece) {
@@ -14,7 +28,7 @@ public class Square {
     }
 
     public Piece getPiece() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.piece;
     }
 
     public Color getColor() {

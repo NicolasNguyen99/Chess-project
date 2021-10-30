@@ -46,10 +46,8 @@ class BoardTest {
         Board.createBoard();
         //when + then
         assertThrows(
-                IndexOutOfBoundsException.class, () -> Board.getSquare('a', 2));
-        assertThrows(
                 IndexOutOfBoundsException.class, () -> Board.getSquare('a', 9));
         assertThrows(
-                IndexOutOfBoundsException.class, () -> Board.getSquare('h', 6));
+                IndexOutOfBoundsException.class, () -> Board.getSquare('m', 6));
     }
 }
