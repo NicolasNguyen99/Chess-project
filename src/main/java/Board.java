@@ -14,29 +14,33 @@ public class Board {
 
     /**
      * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
-     * @param row je pismeno v rozsahu a - h.
-     * @param col je cislo v rozsahu 1 - 8.
+     * @param row je pismeno v rozsahu 1 - 8.
+     * @param col je cislo v rozsahu a - h.
      * @return Vrati prislusne policko.
      * @throws IndexOutOfBoundsException pokud je policko mimo rozsah.
      *
      * @author xnguye17
-     * @version etapa 2
+     * @version etapa 3
      */
-    public static Square getSquare(char row, int col) {
+    public static Square getSquare(int row, int col) {
         Square square = null;
         try {
-            square = squares.get(calculateCoor(row)).get(col);
+            square = squares.get(row).get(col);
         } catch (Exception e) {
             throw new IndexOutOfBoundsException();
         }
         return square;
     }
 
-    private static int calculateCoor(char coor) {
+    public static Square getSquare(int row, char col) {
+        return getSquare(row, calculateCoor(col));
+    }
+
+    public static int calculateCoor(char coor) {
         return (int)coor-96;
     }
 
-    private static char calculateCoor(int coor) {
+    public static char calculateCoor(int coor) {
         coor += 96;
         return (char)coor;
     }
@@ -50,7 +54,7 @@ public class Board {
      * Metoda vytvori prazdnou sachovnici.
 
      * @author xnguye17
-     * @version etapa 2
+     * @version etapa 3
      */
     public static void createBoard() {
         //inicializace prazdne matice
@@ -73,7 +77,7 @@ public class Board {
         Square newSquare;
         for (int row = 1; row < vertexCount; row++) {
             for (int col = 1; col < vertexCount; col++) {
-                newSquare = new Square(calculateCoor(row), col);
+                newSquare = new Square(row, calculateCoor(col));
                 squares.get(row).add(newSquare);
             }
         }

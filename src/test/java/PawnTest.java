@@ -1,0 +1,25 @@
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class PawnTest {
+
+    /**
+     * @author xnguye17
+     * @version etapa 2
+     */
+    @Test
+    void availableMovement_pawn() {
+        //setup
+        Board.createBoard();
+        Pawn piece = new Pawn(Color.BLACK);
+        Square square = Board.getSquare(5, 'h');
+        square.setPiece(piece);
+        var square6H = new Square(6, 'h');
+        Square squaresExpected[] = new Square[]{square6H};
+        //when
+        var squares = piece.availableMovement();
+        //then
+        assertArrayEquals(squaresExpected, squares.toArray());
+    }
+}

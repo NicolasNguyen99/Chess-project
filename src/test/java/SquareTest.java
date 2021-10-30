@@ -10,8 +10,8 @@ class SquareTest {
     @Test
     void setPiece() {
         //setup
-        var square = Board.getSquare('a', 1);
-        var piece = new Piece(Color.WHITE, PieceType.KING);
+        var square = Board.getSquare(1, 'a');
+        var piece = new King(Color.WHITE);
         //when
         square.setPiece(piece);
         //then

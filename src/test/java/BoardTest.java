@@ -13,8 +13,8 @@ class BoardTest {
         //setup
         //when
         Board.createBoard();
-        var squareA1 = Board.getSquare('a', 1);
-        var squareH8 = Board.getSquare('h', 8);
+        var squareA1 = Board.getSquare(1, 'a');
+        var squareH8 = Board.getSquare(8, 'h');
         //then
         assertNotNull(squareA1);
         assertNotNull(squareH8);
@@ -29,11 +29,11 @@ class BoardTest {
         //setup
         Board.createBoard();
         //when
-        var square = Board.getSquare('a', 1);
+        var square = Board.getSquare(8, 'a');
         //then
         assertNotNull(square);
-        assertEquals('a', square.getRow());
-        assertEquals(1, square.getCol());
+        assertEquals(8, square.getRow());
+        assertEquals('a', square.getCol());
     }
 
     /**
@@ -46,8 +46,8 @@ class BoardTest {
         Board.createBoard();
         //when + then
         assertThrows(
-                IndexOutOfBoundsException.class, () -> Board.getSquare('a', 9));
+                IndexOutOfBoundsException.class, () -> Board.getSquare(9, 'a'));
         assertThrows(
-                IndexOutOfBoundsException.class, () -> Board.getSquare('m', 6));
+                IndexOutOfBoundsException.class, () -> Board.getSquare(6, 'm'));
     }
 }

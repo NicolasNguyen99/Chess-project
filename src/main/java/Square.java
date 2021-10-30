@@ -1,10 +1,12 @@
+import java.util.Objects;
+
 public class Square {
     private Color squareColor;
     private Piece piece;
-    private char row;
-    private int col;
+    private int row;
+    private char col;
 
-    public Square(char row, int col) {
+    public Square(int row, char col) {
         this.row = row;
         this.col = col;
 
@@ -23,8 +25,40 @@ public class Square {
         }
     }
 
-    public void setPiece(Piece piece) {
+    /**
+     * @author xnguye17
+     * @version etapa 3
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return this.row == square.row && this.col == square.col && this.squareColor == square.squareColor;
+    }
 
+    /**
+     * @author xnguye17
+     * @version etapa 3
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(squareColor, row, col);
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "squareColor=" + squareColor +
+                ", piece=" + piece +
+                ", row=" + row +
+                ", col=" + col +
+                '}';
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+        piece.setSquare(this);
     }
 
     public Piece getPiece() {
@@ -35,11 +69,11 @@ public class Square {
         return this.squareColor;
     }
 
-    public char getRow() {
+    public int getRow() {
         return this.row;
     }
 
-    public int getCol() {
+    public char getCol() {
         return this.col;
     }
 
