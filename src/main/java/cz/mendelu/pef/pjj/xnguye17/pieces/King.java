@@ -9,12 +9,6 @@ public class King extends Piece {
     public King(Color pieceColor) {
         super(pieceColor, PieceType.KING);
     }
-
-    public record Coor(
-            Integer row,
-            Integer col
-    ) {}
-
     /**
      * @author xnguye17
      * @version etapa 3

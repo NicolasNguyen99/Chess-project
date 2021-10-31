@@ -9,12 +9,6 @@ public class Pawn extends Piece {
     public Pawn(Color pieceColor) {
         super(pieceColor, PieceType.PAWN);
     }
-
-    public record Coor(
-            Integer row,
-            Integer col
-    ) {}
-
     /**
      * @author xnguye17
      * @version etapa 3

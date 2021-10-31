@@ -9,12 +9,6 @@ public class Knight extends Piece {
     public Knight(Color pieceColor) {
         super(pieceColor, PieceType.KNIGHT);
     }
-
-    public record Coor(
-            Integer row,
-            Integer col
-    ) {}
-
     /**
      * @author xnguye17
      * @version etapa 3
