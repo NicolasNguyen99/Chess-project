@@ -9,14 +9,14 @@ class PawnTest {
      * @version etapa 2
      */
     @Test
-    void availableMovement_pawn() {
+    void availableMovement() {
         //setup
         Board.createBoard();
         Pawn piece = new Pawn(Color.BLACK);
         Square square = Board.getSquare(5, 'h');
         square.setPiece(piece);
         var square6H = new Square(6, 'h');
-        Square squaresExpected[] = new Square[]{square6H};
+        Square[] squaresExpected = new Square[]{square6H};
         //when
         var squares = piece.availableMovement();
         //then

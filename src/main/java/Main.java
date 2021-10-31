@@ -1,16 +1,16 @@
-import javax.swing.border.Border;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Board.createBoard();
-        King king = new King(Color.WHITE);
-        Square square = Board.getSquare(1, 'd');
-        square.setPiece(king);
-        System.out.println(square.toString());
+        Knight knight = new Knight(Color.WHITE);
+        Square square = Board.getSquare(6, 'a');
+        square.setPiece(knight);
+        System.out.println(knight);
+        System.out.println(square);
 
-        List<Square> squares = king.availableMovement();
+        List<Square> squares = knight.availableMovement();
         System.out.println(squares.size());
-        System.out.println(squares.toString());
+        System.out.println(squares);
     }
 }

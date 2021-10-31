@@ -12,6 +12,11 @@ abstract class Piece {
         this.square = null;
     }
 
+    public record Coor(
+            Integer row,
+            Integer col
+    ) {}
+
     /**
      * @author xnguye17
      * @version etapa 3

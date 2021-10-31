@@ -14,7 +14,7 @@ public class Board {
 
     /**
      * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
-     * @param row je pismeno v rozsahu 1 - 8.
+     * @param row je cislo v rozsahu 1 - 8.
      * @param col je cislo v rozsahu a - h.
      * @return Vrati prislusne policko.
      * @throws IndexOutOfBoundsException pokud je policko mimo rozsah.
@@ -32,14 +32,38 @@ public class Board {
         return square;
     }
 
+    /**
+     * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
+     * Prekryti metody getSquare(int, int)
+     * @param row je cislo v rozsahu 1 - 8.
+     * @param col je pismeno v rozsahu a - h.
+     * @return Vrati prislusne policko.
+     *
+     * @author xnguye17
+     * @version etapa 3
+     */
     public static Square getSquare(int row, char col) {
         return getSquare(row, calculateCoor(col));
     }
 
+    /**
+     * Metoda prepocita pismeno na integer. (a = 1, b = 2, c = 3...)
+     * @param coor je znak v rozsahu a - h.
+     * @return Vrati integer, ktery reprezentuje oznaceni sloupce na sachovnici.
+     *
+     * @author xnguye17
+     */
     public static int calculateCoor(char coor) {
         return (int)coor-96;
     }
 
+    /**
+     * Metoda prepocita integer na pismeno. (1 = a, 2 = b, 3 = c...)
+     * @param coor je cislo v rozsahu 1 - 8.
+     * @return Vrati znak, ktery reprezentuje oznaceni sloupce na sachovnici.
+     *
+     * @author xnguye17
+     */
     public static char calculateCoor(int coor) {
         coor += 96;
         return (char)coor;

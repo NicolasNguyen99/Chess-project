@@ -2,7 +2,7 @@ public class Game {
     private Player players[];
 
     /**
-     * Metoda vytvori novou rozmistnenou sachovnici.
+     * Metoda vytvori novou sachovnici s figurkama.
      *
      * @author xnguye17
      */
@@ -16,10 +16,14 @@ public class Game {
      * @return Boolean (true = konec hry, false = hra pokracuje)
      *
      * @author xnguye17
-     * @version etapa 2
+     * @version etapa 3
      */
     public boolean isGameOver() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        boolean isGameOver = false;
+
+
+
+        return isGameOver;
     }
 
     /**

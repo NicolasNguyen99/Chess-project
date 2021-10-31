@@ -7,25 +7,29 @@ public class King extends Piece {
         super(pieceColor, PieceType.KING);
     }
 
+    public record Coor(
+            Integer row,
+            Integer col
+    ) {}
+
     /**
      * @author xnguye17
      * @version etapa 3
      */
     @Override
     protected List<Square> availableMovement() {
-        int[] coor = {this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol())};
-        int tBorder = (coor[0] < 8) ? coor[0]+1 : coor[0];
-        int bBorder = (coor[0] > 1) ? coor[0]-1 : coor[0];
+        Coor coor = new Coor(this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol()));
+        int tBorder = (coor.row < 8) ? coor.row+1 : coor.row;
+        int bBorder = (coor.row > 1) ? coor.row-1 : coor.row;
 
-        int rBorder = (coor[1] < 8) ? coor[1]+1 : coor[1];
-        int lBorder = (coor[1] > 1) ? coor[1]-1 : coor[1];
+        int rBorder = (coor.col < 8) ? coor.col+1 : coor.col;
+        int lBorder = (coor.col > 1) ? coor.col-1 : coor.col;
 
         List<Square> availableSquares = new ArrayList<>();
         for (int col = lBorder; col <= rBorder; col++) {
             for (int row = bBorder; row <= tBorder; row++) {
-                if (coor[0] != row || coor[1] != col) {
+                if (coor.row != row || coor.col != col)
                     availableSquares.add(Board.getSquare(row, col));
-                }
             }
         }
         return availableSquares;

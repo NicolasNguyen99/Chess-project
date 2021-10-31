@@ -11,16 +11,16 @@ class GameTest {
     @Test
     void isGameOver_mat() {
         //setup
-        var game = new Game();
+        Game game = new Game();
         Board.createBoard();
-        var square1 = Board.getSquare(8, 'd');
-        var square2 = Board.getSquare(6, 'c');
-        var king = new King(Color.WHITE);
-        var knight = new Knight(Color.BLACK);
+        Square square1 = Board.getSquare(8, 'd');
+        Square square2 = Board.getSquare(6, 'c');
+        King king = new King(Color.WHITE);
+        Knight knight = new Knight(Color.BLACK);
         square1.setPiece(king);
         square2.setPiece(knight);
         //when
-        var isOver = game.isGameOver();
+        boolean isOver = game.isGameOver();
         //then
         assertTrue(isOver);
     }
