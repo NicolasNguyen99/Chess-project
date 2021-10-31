@@ -1,3 +1,6 @@
+package cz.mendelu.pef.pjj.xnguye17;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Knight;
+
 import java.util.List;
 
 public class Main {

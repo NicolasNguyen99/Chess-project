@@ -1,3 +1,6 @@
+package cz.mendelu.pef.pjj.xnguye17;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
+
 import java.util.Objects;
 
 public class Square {

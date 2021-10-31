@@ -1,3 +1,9 @@
+import cz.mendelu.pef.pjj.xnguye17.Board;
+import cz.mendelu.pef.pjj.xnguye17.Color;
+import cz.mendelu.pef.pjj.xnguye17.Game;
+import cz.mendelu.pef.pjj.xnguye17.Square;
+import cz.mendelu.pef.pjj.xnguye17.pieces.King;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Knight;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +19,7 @@ class GameTest {
         //setup
         Game game = new Game();
         Board.createBoard();
+        Board.fillBoard();
         Square square1 = Board.getSquare(8, 'd');
         Square square2 = Board.getSquare(6, 'c');
         King king = new King(Color.WHITE);

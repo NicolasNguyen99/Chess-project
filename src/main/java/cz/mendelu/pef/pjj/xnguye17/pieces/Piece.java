@@ -1,7 +1,12 @@
+package cz.mendelu.pef.pjj.xnguye17.pieces;
+import cz.mendelu.pef.pjj.xnguye17.Board;
+import cz.mendelu.pef.pjj.xnguye17.Color;
+import cz.mendelu.pef.pjj.xnguye17.Square;
+
 import java.util.List;
 import java.util.Objects;
 
-abstract class Piece {
+public abstract class Piece {
     private Color pieceColor;
     private PieceType pieceType;
     private Square square;
@@ -58,7 +63,7 @@ abstract class Piece {
      * @author xnguye17
      * @version etapa 2
      */
-    protected List<Square> availableMovement() {
+    public List<Square> availableMovement() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
@@ -77,7 +82,15 @@ abstract class Piece {
         this.square = square;
     }
 
+    public void setSquare(int row, char col) {
+        setSquare(Board.getSquare(row, Board.calculateCoor(col)));
+    }
+
     public Square getSquare() {
         return this.square;
+    }
+
+    public Color getPieceColor() {
+        return this.pieceColor;
     }
 }

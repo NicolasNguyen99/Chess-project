@@ -1,5 +1,10 @@
+package cz.mendelu.pef.pjj.xnguye17;
+
+import cz.mendelu.pef.pjj.xnguye17.pieces.King;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
+
 public class Game {
-    private Player players[];
+    private Player[] players;
 
     /**
      * Metoda vytvori novou sachovnici s figurkama.
@@ -20,8 +25,19 @@ public class Game {
      */
     public boolean isGameOver() {
         boolean isGameOver = false;
+        boolean isMat = false;
 
+        King king = (King)Board.getPieces().get(1);
 
+        for (var entry : Board.getPieces().entrySet()) {
+            Piece piece = entry.getValue();
+            if ((piece.getPieceColor() != king.getPieceColor()) && (piece.availableMovement().contains(king.getSquare())))
+                isMat = true;
+        }
+        //TODO surrender, noWinner, lastTwoPieces
+
+        if (isMat)
+            isGameOver = true;
 
         return isGameOver;
     }

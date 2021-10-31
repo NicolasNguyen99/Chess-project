@@ -1,5 +1,13 @@
+package cz.mendelu.pef.pjj.xnguye17;
+import cz.mendelu.pef.pjj.xnguye17.pieces.King;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Knight;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Queen;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
     /**
@@ -11,6 +19,7 @@ public class Board {
      */
     private static final int vertexCount = 9;
     private static List<List<Square>> squares = new ArrayList<>(vertexCount);
+    private static Map<Integer, Piece> pieces = new HashMap<>();
 
     /**
      * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
@@ -107,8 +116,33 @@ public class Board {
         }
     }
 
+    /**
+     * Metoda naplni prazdnou sachovnici
+     * Provizorni metoda, kvuli otestovani testu, bude predelana
+     *
+     * @author xnguye17
+     */
     public static void fillBoard() {
+        Map<Integer, Piece> entry = new HashMap<>();
+        Piece piece = null;
 
+        piece = new King(Color.WHITE);
+        Board.getSquare(8, 'd').setPiece(piece);
+        entry.put(1, piece);
+
+        piece = new Queen(Color.WHITE);
+        Board.getSquare(8, 'e').setPiece(piece);
+        entry.put(2, piece);
+
+        piece = new Knight(Color.BLACK);
+        Board.getSquare(6, 'c').setPiece(piece);
+        entry.put(26, piece);
+
+        pieces.putAll(entry);
+    }
+
+    public static Map<Integer, Piece> getPieces() {
+        return pieces;
     }
 
 }

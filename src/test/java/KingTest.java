@@ -1,3 +1,7 @@
+import cz.mendelu.pef.pjj.xnguye17.Board;
+import cz.mendelu.pef.pjj.xnguye17.Color;
+import cz.mendelu.pef.pjj.xnguye17.Square;
+import cz.mendelu.pef.pjj.xnguye17.pieces.King;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

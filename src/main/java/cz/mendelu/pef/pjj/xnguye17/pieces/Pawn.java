@@ -1,3 +1,6 @@
+package cz.mendelu.pef.pjj.xnguye17.pieces;
+import cz.mendelu.pef.pjj.xnguye17.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +15,12 @@ public class Pawn extends Piece {
             Integer col
     ) {}
 
+    /**
+     * @author xnguye17
+     * @version etapa 3
+     */
     @Override
-    protected List<Square> availableMovement() {
+    public List<Square> availableMovement() {
         Coor coor = new Coor(this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol()));
         int tBorder = (coor.row < 8) ? coor.row+1 : coor.row;
 

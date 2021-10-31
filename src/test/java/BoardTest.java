@@ -1,8 +1,15 @@
+import cz.mendelu.pef.pjj.xnguye17.Board;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
+
+    @BeforeEach
+    void setUp() {
+        Board.createBoard();
+    }
 
     /**
      * @author xnguye17
@@ -12,7 +19,6 @@ class BoardTest {
     void createBoard() {
         //setup
         //when
-        Board.createBoard();
         var squareA1 = Board.getSquare(1, 'a');
         var squareH8 = Board.getSquare(8, 'h');
         //then
@@ -27,7 +33,6 @@ class BoardTest {
     @Test
     void getSquare() {
         //setup
-        Board.createBoard();
         //when
         var square = Board.getSquare(8, 'a');
         //then
@@ -43,11 +48,8 @@ class BoardTest {
     @Test
     void getSquare_outOfChessBoard() {
         //setup
-        Board.createBoard();
         //when + then
         assertThrows(
                 IndexOutOfBoundsException.class, () -> Board.getSquare(9, 'a'));
-        assertThrows(
-                IndexOutOfBoundsException.class, () -> Board.getSquare(6, 'm'));
     }
 }
