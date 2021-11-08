@@ -11,7 +11,7 @@ public class Game {
      *
      * @author xnguye17
      */
-    private void prepareGame() {
+    public void prepareGame() {
         Board.prepareGame();
     }
 
