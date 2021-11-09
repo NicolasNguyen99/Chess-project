@@ -75,10 +75,6 @@ public class Board {
         return (char)coor;
     }
 
-    public static int inverseInt(int num) {
-        return 9 - num;
-    }
-
     public static void prepareGame(){
         createBoard();
         fillBoard();
@@ -128,80 +124,80 @@ public class Board {
         Piece piece = null;
 
         piece = new King(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'd').setPiece(piece);
+        Board.getSquare(1, 'd').setPiece(piece);
         entry.put(1, piece);
 
         piece = new Queen(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'e').setPiece(piece);
+        Board.getSquare(1, 'e').setPiece(piece);
         entry.put(2, piece);
 
         piece = new Bishop(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'c').setPiece(piece);
+        Board.getSquare(1, 'c').setPiece(piece);
         entry.put(3, piece);
 
         piece = new Bishop(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'f').setPiece(piece);
+        Board.getSquare(1, 'f').setPiece(piece);
         entry.put(4, piece);
 
         piece = new Knight(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'b').setPiece(piece);
+        Board.getSquare(1, 'b').setPiece(piece);
         entry.put(5, piece);
 
         piece = new Knight(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'g').setPiece(piece);
+        Board.getSquare(1, 'g').setPiece(piece);
         entry.put(6, piece);
 
         piece = new Rook(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'a').setPiece(piece);
+        Board.getSquare(1, 'a').setPiece(piece);
         entry.put(7, piece);
 
         piece = new Rook(Color.BLACK);
-        Board.getSquare(inverseInt(1), 'h').setPiece(piece);
+        Board.getSquare(1, 'h').setPiece(piece);
         entry.put(8, piece);
 
-        for (int i = 1; i < vertexCount; i++) {
-            piece = new Pawn(Color.BLACK);
-            Board.getSquare(inverseInt(2), calculateCoor(i)).setPiece(piece);
-            entry.put(8+i, piece);
-        }
+//        for (int i = 1; i < vertexCount; i++) {
+//            piece = new Pawn(Color.BLACK);
+//            Board.getSquare(2, calculateCoor(i)).setPiece(piece);
+//            entry.put(8+i, piece);
+//        }
 
         piece = new King(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'd').setPiece(piece);
+        Board.getSquare(8, 'd').setPiece(piece);
         entry.put(21, piece);
 
         piece = new Queen(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'e').setPiece(piece);
+        Board.getSquare(8, 'e').setPiece(piece);
         entry.put(22, piece);
 
         piece = new Bishop(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'c').setPiece(piece);
+        Board.getSquare(8, 'c').setPiece(piece);
         entry.put(23, piece);
 
         piece = new Bishop(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'f').setPiece(piece);
+        Board.getSquare(8, 'f').setPiece(piece);
         entry.put(24, piece);
 
         piece = new Knight(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'b').setPiece(piece);
+        Board.getSquare(8, 'b').setPiece(piece);
         entry.put(25, piece);
 
         piece = new Knight(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'g').setPiece(piece);
+        Board.getSquare(8, 'g').setPiece(piece);
         entry.put(26, piece);
 
         piece = new Rook(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'a').setPiece(piece);
+        Board.getSquare(8, 'a').setPiece(piece);
         entry.put(27, piece);
 
         piece = new Rook(Color.WHITE);
-        Board.getSquare(inverseInt(8), 'h').setPiece(piece);
+        Board.getSquare(8, 'h').setPiece(piece);
         entry.put(28, piece);
 
-        for (int i = 1; i < vertexCount; i++) {
-            piece = new Pawn(Color.WHITE);
-            Board.getSquare(inverseInt(7), calculateCoor(i)).setPiece(piece);
-            entry.put(28+i, piece);
-        }
+//        for (int i = 1; i < vertexCount; i++) {
+//            piece = new Pawn(Color.WHITE);
+//            Board.getSquare(7, calculateCoor(i)).setPiece(piece);
+//            entry.put(28+i, piece);
+//        }
 
         pieces.putAll(entry);
     }
