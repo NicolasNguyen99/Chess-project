@@ -6,6 +6,10 @@ import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
 public class Game {
     private Player[] players;
 
+    public Game() {
+        players = new Player[2];
+    }
+
     /**
      * Metoda vytvori novou sachovnici s figurkama.
      *
@@ -13,6 +17,8 @@ public class Game {
      */
     public void prepareGame() {
         Board.prepareGame();
+        players[0] = new Player("Player 1", Color.WHITE);
+        players[1] = new Player("Player 2", Color.BLACK);
     }
 
     /**
@@ -55,6 +61,6 @@ public class Game {
     }
 
     public Player[] getPlayers () {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.players;
     }
 }
