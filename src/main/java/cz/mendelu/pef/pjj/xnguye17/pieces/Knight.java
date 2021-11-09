@@ -59,9 +59,9 @@ public class Knight extends Piece {
         }
 
         List<Square> availableSquares = new ArrayList<>();
-        for (Coor var : availableCoor)
-            availableSquares.add(Board.getSquare(var.row, var.col));
-
+        for (Coor coors : availableCoor)
+            if (Board.getSquare(coors.row, coors.col).getPiece() == null || Board.getSquare(coors.row, coors.col).getPiece().getPieceColor() != this.getPieceColor())
+                availableSquares.add(Board.getSquare(coors.row, coors.col));
         return availableSquares;
     }
 }

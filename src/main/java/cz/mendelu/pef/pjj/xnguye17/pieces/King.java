@@ -25,7 +25,10 @@ public class King extends Piece {
         List<Square> availableSquares = new ArrayList<>();
         for (int col = lBorder; col <= rBorder; col++) {
             for (int row = bBorder; row <= tBorder; row++) {
+                //kontrola hranice
                 if (coor.row != row || coor.col != col)
+                    //kontrola policka s enemy figurkou nebo prazdyn polickem
+                    if (Board.getSquare(row, col).getPiece() == null || Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor())
                     availableSquares.add(Board.getSquare(row, col));
             }
         }

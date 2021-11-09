@@ -16,16 +16,26 @@ public class Pawn extends Piece {
     @Override
     public List<Square> availableMovement() {
         Coor coor = new Coor(this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol()));
-        int tBorder = (coor.row < 8) ? coor.row+1 : coor.row;
+        int tBorder, rBorder, lBorder;
 
-        int rBorder = (coor.col < 8) ? coor.col +1 : coor.col ;
-        int lBorder = (coor.col  > 1) ? coor.col -1 : coor.col ;
+        //urceni smeru figurek
+        if (this.getPieceColor() == Color.BLACK)
+            tBorder = (coor.row < 8) ? coor.row+1 : coor.row;
+        else
+            tBorder = (coor.row > 1) ? coor.row-1 : coor.row;
+
+        rBorder = (coor.col < 8) ? coor.col +1 : coor.col ;
+        lBorder = (coor.col  > 1) ? coor.col -1 : coor.col ;
 
         List<Square> availableSquares = new ArrayList<>();
-        if (Board.getSquare(tBorder, lBorder).getPiece() != null)
+        //kontrola jestli je diagonalne vlevo o jedno enemy figurka
+        if ((Board.getSquare(tBorder, lBorder).getPiece() != null) && (Board.getSquare(tBorder, lBorder).getPiece().getPieceColor() != this.getPieceColor()))
             availableSquares.add(Board.getSquare(tBorder, lBorder));
-        availableSquares.add(Board.getSquare(tBorder, coor.col ));
-        if (Board.getSquare(tBorder, rBorder).getPiece() != null)
+        //kontrola jestli je o policko vpred volne policko
+        if (Board.getSquare(tBorder, coor.col).getPiece() == null)
+            availableSquares.add(Board.getSquare(tBorder, coor.col ));
+        //kontrola jestli je diagonalne vpravo o jedno enemy figurka
+        if ((Board.getSquare(tBorder, rBorder).getPiece() != null) && (Board.getSquare(tBorder, rBorder).getPiece().getPieceColor() != this.getPieceColor()))
             availableSquares.add(Board.getSquare(tBorder, rBorder));
 
         return availableSquares;
