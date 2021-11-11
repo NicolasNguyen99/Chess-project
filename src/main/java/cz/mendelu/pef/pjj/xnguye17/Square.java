@@ -80,4 +80,9 @@ public class Square {
         return this.col;
     }
 
+    public void removePiece() {
+        piece = null;
+        System.out.println("Remove piece was called");
+    }
+
 }

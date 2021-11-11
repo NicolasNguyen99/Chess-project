@@ -121,7 +121,7 @@ public class Board {
      */
     public static void fillBoard() {
         Map<Integer, Piece> entry = new HashMap<>();
-        Piece piece = null;
+        Piece piece;
 
         piece = new King(Color.BLACK);
         Board.getSquare(1, 'd').setPiece(piece);
@@ -155,11 +155,11 @@ public class Board {
         Board.getSquare(1, 'h').setPiece(piece);
         entry.put(8, piece);
 
-//        for (int i = 1; i < vertexCount; i++) {
-//            piece = new Pawn(Color.BLACK);
-//            Board.getSquare(2, calculateCoor(i)).setPiece(piece);
-//            entry.put(8+i, piece);
-//        }
+        for (int i = 1; i < vertexCount; i++) {
+            piece = new Pawn(Color.BLACK);
+            Board.getSquare(2, calculateCoor(i)).setPiece(piece);
+            entry.put(8+i, piece);
+        }
 
         piece = new King(Color.WHITE);
         Board.getSquare(8, 'd').setPiece(piece);
@@ -193,13 +193,30 @@ public class Board {
         Board.getSquare(8, 'h').setPiece(piece);
         entry.put(28, piece);
 
-//        for (int i = 1; i < vertexCount; i++) {
-//            piece = new Pawn(Color.WHITE);
-//            Board.getSquare(7, calculateCoor(i)).setPiece(piece);
-//            entry.put(28+i, piece);
-//        }
+        for (int i = 1; i < vertexCount; i++) {
+            piece = new Pawn(Color.WHITE);
+            Board.getSquare(7, calculateCoor(i)).setPiece(piece);
+            entry.put(28+i, piece);
+        }
 
         pieces.putAll(entry);
+    }
+
+    /**
+     * Metoda presune figurku na zvolene souradnice (policko).
+     * @param piece je figurka z jednoho mozneho typu PieceType.
+     * @param row je pismeno v rozsahu 1 - 8.
+     * @param col je cislo v rozsahu a - h.
+     *
+     * @author xnguye17
+     */
+    public static boolean movePiece(Piece piece, int row, char col) {
+        if (piece.availableMovement().contains(Board.getSquare(row, col))) {
+            piece.moveTo(row, col);
+            piece.setChangedPosition(Board.getSquare(row, col));
+            return true;
+        } else
+            return false;
     }
 
     public static Map<Integer, Piece> getPieces() {

@@ -48,18 +48,6 @@ public class Game {
         return isGameOver;
     }
 
-    /**
-     * Metoda presune figurku na zvolene souradnice (policko).
-     * @param piece je figurka z jednoho mozneho typu PieceType.
-     * @param row je pismeno v rozsahu 1 - 8.
-     * @param col je cislo v rozsahu a - h.
-     *
-     * @author xnguye17
-     */
-    public void movePiece(Piece piece, int row, char col) {
-
-    }
-
     public Player[] getPlayers () {
         return this.players;
     }
