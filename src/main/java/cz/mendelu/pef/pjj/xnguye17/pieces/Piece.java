@@ -10,11 +10,15 @@ public abstract class Piece {
     private Color pieceColor;
     private PieceType pieceType;
     private Square square;
+    private boolean isChosed;
+    private Square changedPosition;
 
     public Piece(Color pieceColor, PieceType pieceType){
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
         this.square = null;
+        this.isChosed = false;
+        this.changedPosition = null;
     }
 
     /**
@@ -70,7 +74,17 @@ public abstract class Piece {
      * @author xnguye17
      */
     public void moveTo(int row, char col) {
+        square.removePiece();
+        this.setSquare(row, col);
+        square.setPiece(this);
+    }
 
+    public void setChangedPosition(Square square) {
+        changedPosition = square;
+    }
+
+    public Square getChangedPosition() {
+        return changedPosition;
     }
 
     public void setSquare(Square square) {
@@ -91,5 +105,13 @@ public abstract class Piece {
 
     public PieceType getPieceType() {
         return this.pieceType;
+    }
+
+    public void switchIsChosed() {
+        this.isChosed = !this.isChosed;
+    }
+
+    public boolean getIsChosed() {
+        return this.isChosed;
     }
 }

@@ -21,30 +21,15 @@ public class Queen extends Piece {
         int row, col;
         boolean foundPiece;
 
-        //leva horni diagonala
-        row = coor.row;
-        col = coor.col;
-        foundPiece = false;
-        while (!foundPiece) {
-            if (row < 8 && col > 1) {
-                row++;
-                col--;
-                if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
-                    availableSquares.add(Board.getSquare(row, col));
-                else
-                    foundPiece = true;
-            } else
-                foundPiece = true;
-        }
-
         //smeru nahoru
         foundPiece = false;
         row = coor.row;
         while (row < Board.vertexCount-1 && !foundPiece) {
             row++;
-            if (Board.getSquare(row, coor.col).getPiece() == null)
+            if (Board.getSquare(row, coor.col).getPiece() == null) {
+                System.out.println("Jsou null: " + Board.getSquare(row, coor.col).getPiece());
                 availableSquares.add(Board.getSquare(row, coor.col));
-            else if (Board.getSquare(row, coor.col).getPiece().getPieceColor() != this.getPieceColor()) {
+            } else if (Board.getSquare(row, coor.col).getPiece().getPieceColor() != this.getPieceColor()) {
                 availableSquares.add(Board.getSquare(row, coor.col));
                 foundPiece = true;
             } else {
@@ -73,9 +58,9 @@ public class Queen extends Piece {
         col = coor.col;
         while (col < Board.vertexCount-1 && !foundPiece) {
             col++;
-            if (Board.getSquare(coor.row, col).getPiece() == null)
-                availableSquares.add(Board.getSquare(row, col));
-            else if (Board.getSquare(coor.row, col).getPiece().getPieceColor() != this.getPieceColor()) {
+            if (Board.getSquare(coor.row, col).getPiece() == null) {
+                availableSquares.add(Board.getSquare(coor.row, col));
+            } else if (Board.getSquare(coor.row, col).getPiece().getPieceColor() != this.getPieceColor()) {
                 availableSquares.add(Board.getSquare(coor.row, col));
                 foundPiece = true;
             } else {
@@ -104,9 +89,9 @@ public class Queen extends Piece {
         row = coor.row;
         while (row > 1 && !foundPiece) {
             row--;
-            if (Board.getSquare(row, coor.col).getPiece() == null)
+            if (Board.getSquare(row, coor.col).getPiece() == null) {
                 availableSquares.add(Board.getSquare(row, coor.col));
-            else if (Board.getSquare(row, coor.col).getPiece().getPieceColor() != this.getPieceColor()) {
+            } else if (Board.getSquare(row, coor.col).getPiece().getPieceColor() != this.getPieceColor()) {
                 availableSquares.add(Board.getSquare(row, coor.col));
                 foundPiece = true;
             } else {
@@ -135,14 +120,33 @@ public class Queen extends Piece {
         col = coor.col;
         while (col > 1 && !foundPiece) {
             col--;
-            if (Board.getSquare(coor.row, col).getPiece() == null)
-                availableSquares.add(Board.getSquare(row, col));
-            else if (Board.getSquare(coor.row, col).getPiece().getPieceColor() != this.getPieceColor()) {
+            if (Board.getSquare(coor.row, col).getPiece() == null) {
+                availableSquares.add(Board.getSquare(coor.row, col));
+            } else if (Board.getSquare(coor.row, col).getPiece().getPieceColor() != this.getPieceColor()) {
                 availableSquares.add(Board.getSquare(coor.row, col));
                 foundPiece = true;
             } else {
                 foundPiece = true;
             }
+        }
+
+        //leva horni diagonala
+        row = coor.row;
+        col = coor.col;
+        foundPiece = false;
+        while (!foundPiece) {
+            if (row < 8 && col > 1) {
+                row++;
+                col--;
+                if ((Board.getSquare(row, col).getPiece() == null)) {
+                    availableSquares.add(Board.getSquare(row, col));
+                } else if (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()) {
+                    availableSquares.add(Board.getSquare(row, col));
+                    foundPiece = true;
+                } else
+                    foundPiece = true;
+            } else
+                foundPiece = true;
         }
 
         return availableSquares;

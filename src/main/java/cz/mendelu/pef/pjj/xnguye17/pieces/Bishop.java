@@ -19,70 +19,73 @@ public class Bishop extends Piece {
         Coor coor = new Coor(this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol()));
         List<Square> availableSquares = new ArrayList<>();
         int row, col;
-        boolean isEnd;
+        boolean foundPiece;
 
         //leva horni diagonala
         row = coor.row;
         col = coor.col;
-        isEnd = false;
-        while (!isEnd) {
+        foundPiece = false;
+        while (!foundPiece) {
             if (row < 8 && col > 1) {
                 row++;
                 col--;
-                if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
+                if ((Board.getSquare(row, col).getPiece() == null)) {
                     availableSquares.add(Board.getSquare(row, col));
-                else
-                    isEnd = true;
+                } else if (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()) {
+                    availableSquares.add(Board.getSquare(row, col));
+                    foundPiece = true;
+                } else
+                    foundPiece = true;
             } else
-                isEnd = true;
+                foundPiece = true;
         }
 
         //prava horni diagonala
         row = coor.row;
         col = coor.col;
-        isEnd = false;
-        while (!isEnd) {
+        foundPiece = false;
+        while (!foundPiece) {
             if (row < 8 && col < 8) {
                 row++;
                 col++;
                 if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
                     availableSquares.add(Board.getSquare(row, col));
                 else
-                    isEnd = true;
+                    foundPiece = true;
             } else
-                isEnd = true;
+                foundPiece = true;
         }
 
         //prava dolni diagonala
         row = coor.row;
         col = coor.col;
-        isEnd = false;
-        while (!isEnd) {
+        foundPiece = false;
+        while (!foundPiece) {
             if (row > 1 && col < 8) {
                 row--;
                 col++;
                 if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
                     availableSquares.add(Board.getSquare(row, col));
                 else
-                    isEnd = true;
+                    foundPiece = true;
             } else
-                isEnd = true;
+                foundPiece = true;
         }
 
         //leva dolni diagonala
         row = coor.row;
         col = coor.col;
-        isEnd = false;
-        while (!isEnd) {
+        foundPiece = false;
+        while (!foundPiece) {
             if (row > 1 && col > 1) {
                 row--;
                 col--;
                 if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
                     availableSquares.add(Board.getSquare(row, col));
                 else
-                    isEnd = true;
+                    foundPiece = true;
             } else
-                isEnd = true;
+                foundPiece = true;
         }
 
         return availableSquares;
