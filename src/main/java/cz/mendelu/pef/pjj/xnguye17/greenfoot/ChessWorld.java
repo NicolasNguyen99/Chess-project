@@ -28,14 +28,14 @@ public class ChessWorld extends World {
 
         //Rozmisteni bilych figurek na sachovnici
         for (int col = 0; col < 8; col++) {
-            for (int row = 0; row < 1; row++) { //prehodit na 1 pri zkouseni, zpet na 2
+            for (int row = 0; row < 2; row++) { //prehodit na 1 pri zkouseni, zpet na 2
                 addObject(new PieceActor(row, col), col, row);
             }
         }
 
         //Rozmisteni cernych figurek na sachovnici
         for (int col = 0; col < 8; col++) {
-            for (int row = 7; row > 6; row--) { //prechodit na 6 pri zkouseni, zpet na 5
+            for (int row = 7; row > 5; row--) { //prechodit na 6 pri zkouseni, zpet na 5
                 addObject(new PieceActor(row, col), col, row);
             }
         }

@@ -7,10 +7,6 @@ public class PlayerColorActor extends Actor {
     Player player;
     public PlayerColorActor(Player player) {
         this.player = player;
-    }
-
-    @Override
-    public void act() {
         setImage(String.format("images/playerColors/%s.png", player.getPieceColor()));
     }
 }

@@ -11,10 +11,6 @@ public class LabelActor extends Actor {
 
     public LabelActor(Player player) {
         this.player = player;
-    }
-
-    @Override
-    public void act() {
         var image = new GreenfootImage(player.getName(), 24, Color.BLACK, new Color(0,0,0, 0));
         setImage(image);
     }

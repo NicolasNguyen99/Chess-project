@@ -11,7 +11,7 @@ public class TimerActor extends Actor {
 
     public TimerActor() {
         this.time = 3300;
-        Greenfoot.setSpeed(18);
+//        Greenfoot.setSpeed(18); //hrozne to brzdi cely program
     }
 
     private String calculateTime(int time) {
