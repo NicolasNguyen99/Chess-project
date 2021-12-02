@@ -18,8 +18,7 @@ class GameTest {
     void isGameOver_mat() {
         //setup
         Game game = new Game();
-        Board.createBoard();
-        Board.fillBoard();
+        game.prepareGame();
         Square square1 = Board.getSquare(8, 'd');
         Square square2 = Board.getSquare(6, 'c');
         King king = new King(Color.WHITE);

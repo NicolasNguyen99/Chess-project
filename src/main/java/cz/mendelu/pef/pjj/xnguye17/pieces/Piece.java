@@ -5,12 +5,15 @@ import cz.mendelu.pef.pjj.xnguye17.Square;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Piece {
     private Color pieceColor;
     private PieceType pieceType;
     private Square square;
     private boolean isChosed;
+    private boolean isAlive;
     private Square changedPosition;
 
     public Piece(Color pieceColor, PieceType pieceType){
@@ -18,6 +21,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
         this.square = null;
         this.isChosed = false;
+        this.isAlive = true;
         this.changedPosition = null;
     }
 

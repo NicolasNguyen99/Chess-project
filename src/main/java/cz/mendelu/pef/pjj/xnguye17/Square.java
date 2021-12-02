@@ -82,7 +82,6 @@ public class Square {
 
     public void removePiece() {
         piece = null;
-        System.out.println("Remove piece was called");
     }
 
 }

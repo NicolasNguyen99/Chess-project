@@ -4,7 +4,7 @@ import cz.mendelu.pef.pjj.xnguye17.pieces.King;
 import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
 
 public class Game {
-    private Player[] players;
+    private final Player[] players;
 
     public Game() {
         players = new Player[2];
@@ -50,5 +50,13 @@ public class Game {
 
     public Player[] getPlayers () {
         return this.players;
+    }
+
+    public void endGame() {
+        System.exit(0);
+    }
+
+    public void saveGame() {
+        Board.saveBoard();
     }
 }

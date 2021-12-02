@@ -7,8 +7,18 @@ import cz.mendelu.pef.pjj.xnguye17.Square;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Bishop extends Piece {
+    private interface myInterface {
+        void resetValues();
+    }
+
+    //jenom na zkousku, bude upraveno (interface i lambda vyrazy)
+    private interface myInterface2 {
+        void testCondition();
+    }
 
     public Bishop(Color pieceColor) {
         super(pieceColor, PieceType.BISHOP);
@@ -18,74 +28,58 @@ public class Bishop extends Piece {
     public List<Square> availableMovement() {
         Coor coor = new Coor(this.getSquare().getRow(), Board.calculateCoor(this.getSquare().getCol()));
         List<Square> availableSquares = new ArrayList<>();
-        int row, col;
-        boolean foundPiece;
+        AtomicInteger row = new AtomicInteger();
+        AtomicInteger col = new AtomicInteger();
+        AtomicBoolean foundPiece = new AtomicBoolean(false);
+
+        myInterface r = () ->
+        {
+            row.set(coor.row);
+            col.set(coor.col);
+            foundPiece.set(false);
+        };
+
+        myInterface2 t = () ->
+        {
+            if ((Board.getSquare(row.get(), col.get()).getPiece() == null)) {
+                availableSquares.add(Board.getSquare(row.get(), col.get()));
+            } else if (Board.getSquare(row.get(), col.get()).getPiece().getPieceColor() != this.getPieceColor()) {
+                availableSquares.add(Board.getSquare(row.get(), col.get()));
+                foundPiece.set(true);
+            } else
+                foundPiece.set(true);
+        };
 
         //leva horni diagonala
-        row = coor.row;
-        col = coor.col;
-        foundPiece = false;
-        while (!foundPiece) {
-            if (row < 8 && col > 1) {
-                row++;
-                col--;
-                if ((Board.getSquare(row, col).getPiece() == null)) {
-                    availableSquares.add(Board.getSquare(row, col));
-                } else if (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()) {
-                    availableSquares.add(Board.getSquare(row, col));
-                    foundPiece = true;
-                } else
-                    foundPiece = true;
-            } else
-                foundPiece = true;
+        r.resetValues();
+        while (!foundPiece.get() && (row.get() < 8 && col.get() > 1)) {
+            row.getAndIncrement();
+            col.getAndDecrement();
+            t.testCondition();
         }
 
         //prava horni diagonala
-        row = coor.row;
-        col = coor.col;
-        foundPiece = false;
-        while (!foundPiece) {
-            if (row < 8 && col < 8) {
-                row++;
-                col++;
-                if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
-                    availableSquares.add(Board.getSquare(row, col));
-                else
-                    foundPiece = true;
-            } else
-                foundPiece = true;
+        r.resetValues();
+        while (!foundPiece.get() && (row.get() < 8 && col.get() < 8)) {
+            row.getAndIncrement();
+            col.getAndIncrement();
+            t.testCondition();
         }
 
         //prava dolni diagonala
-        row = coor.row;
-        col = coor.col;
-        foundPiece = false;
-        while (!foundPiece) {
-            if (row > 1 && col < 8) {
-                row--;
-                col++;
-                if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
-                    availableSquares.add(Board.getSquare(row, col));
-                else
-                    foundPiece = true;
-            } else
-                foundPiece = true;
+        r.resetValues();
+        while (!foundPiece.get() && (row.get() > 1 && col.get() < 8)) {
+            row.getAndDecrement();
+            col.getAndIncrement();
+            t.testCondition();
         }
 
         //leva dolni diagonala
-        row = coor.row;
-        col = coor.col;
-        foundPiece = false;
-        while (!foundPiece) {
-            if (row > 1 && col > 1) {
-                row--;
-                col--;
-                if ((Board.getSquare(row, col).getPiece() == null) || (Board.getSquare(row, col).getPiece().getPieceColor() != this.getPieceColor()))
-                    availableSquares.add(Board.getSquare(row, col));
-                else
-                    foundPiece = true;
-            } else
-                foundPiece = true;
+        r.resetValues();
+        while (!foundPiece.get() && (row.get() > 1 && col.get() > 1)) {
+            row.getAndDecrement();
+            col.getAndDecrement();
+            t.testCondition();
         }
 
         return availableSquares;

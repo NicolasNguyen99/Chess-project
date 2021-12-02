@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-
+    /**
+     * TODO opravit pohyb
+     * @author xnguye17
+     */
     public Queen(Color pieceColor) {
         super(pieceColor, PieceType.QUEEN);
     }
@@ -27,7 +30,6 @@ public class Queen extends Piece {
         while (row < Board.vertexCount-1 && !foundPiece) {
             row++;
             if (Board.getSquare(row, coor.col).getPiece() == null) {
-                System.out.println("Jsou null: " + Board.getSquare(row, coor.col).getPiece());
                 availableSquares.add(Board.getSquare(row, coor.col));
             } else if (Board.getSquare(row, coor.col).getPiece().getPieceColor() != this.getPieceColor()) {
                 availableSquares.add(Board.getSquare(row, coor.col));

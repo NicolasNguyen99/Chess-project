@@ -1,10 +1,11 @@
 package cz.mendelu.pef.pjj.xnguye17;
 import cz.mendelu.pef.pjj.xnguye17.pieces.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Board {
     /**
@@ -15,8 +16,8 @@ public class Board {
      * @author xnguye17
      */
     public static final int vertexCount = 9;
-    private static List<List<Square>> squares = new ArrayList<>(vertexCount);
-    private static Map<Integer, Piece> pieces = new HashMap<>();
+    private static final List<List<Square>> squares = new ArrayList<>(vertexCount);
+    private static final Map<Integer, Piece> pieces = new HashMap<>();
 
     /**
      * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
@@ -75,9 +76,14 @@ public class Board {
         return (char)coor;
     }
 
+    /**
+     * Metoda pripravi naplnenou sachovnici ze vstupniho souboru
+     *
+     * @author xnguye17
+     */
     public static void prepareGame(){
         createBoard();
-        fillBoard();
+        loadBoard();
     }
 
     /**
@@ -113,93 +119,91 @@ public class Board {
         }
     }
 
+    private static Piece createPiece(String pieceType, String color){
+        Color pieceColor = Objects.equals(color, "black") ? Color.BLACK : Color.WHITE;
+        Piece piece;
+        switch (pieceType) {
+            case "king":
+                piece = new King(pieceColor);
+                break;
+            case "queen":
+                piece = new Queen(pieceColor);
+                break;
+            case "rook":
+                piece = new Rook(pieceColor);
+                break;
+            case "knight":
+                piece = new Knight(pieceColor);
+                break;
+            case "pawn":
+                piece = new Pawn(pieceColor);
+                break;
+            case "bishop":
+                piece = new Bishop(pieceColor);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + pieceType);
+        }
+        return piece;
+    }
+
     /**
-     * Metoda naplni prazdnou sachovnici
-     * Provizorni metoda, kvuli otestovani testu, bude predelana
+     * Metoda naplni prazdnou sachovnici ze vstupniho souboru
+     * TODO Bude pridan vyber, jestli cist ze statovaciho souboru nebo ulozeneho napr. z predesle hry
      *
      * @author xnguye17
+     * @version etapa 4
      */
-    public static void fillBoard() {
+    private static void loadBoard() {
         Map<Integer, Piece> entry = new HashMap<>();
         Piece piece;
 
-        piece = new King(Color.BLACK);
-        Board.getSquare(1, 'd').setPiece(piece);
-        entry.put(1, piece);
-
-        piece = new Queen(Color.BLACK);
-        Board.getSquare(1, 'e').setPiece(piece);
-        entry.put(2, piece);
-
-        piece = new Bishop(Color.BLACK);
-        Board.getSquare(1, 'c').setPiece(piece);
-        entry.put(3, piece);
-
-        piece = new Bishop(Color.BLACK);
-        Board.getSquare(1, 'f').setPiece(piece);
-        entry.put(4, piece);
-
-        piece = new Knight(Color.BLACK);
-        Board.getSquare(1, 'b').setPiece(piece);
-        entry.put(5, piece);
-
-        piece = new Knight(Color.BLACK);
-        Board.getSquare(1, 'g').setPiece(piece);
-        entry.put(6, piece);
-
-        piece = new Rook(Color.BLACK);
-        Board.getSquare(1, 'a').setPiece(piece);
-        entry.put(7, piece);
-
-        piece = new Rook(Color.BLACK);
-        Board.getSquare(1, 'h').setPiece(piece);
-        entry.put(8, piece);
-
-        for (int i = 1; i < vertexCount; i++) {
-            piece = new Pawn(Color.BLACK);
-            Board.getSquare(2, calculateCoor(i)).setPiece(piece);
-            entry.put(8+i, piece);
+        try (var r = new BufferedReader(new InputStreamReader(new FileInputStream("texts/piecesStartingLayout.txt"), StandardCharsets.UTF_8))) {
+            Matcher matcher;
+            String line;
+            while ((line = r.readLine()) != null) {
+                var pattern = Pattern.compile("^(\\w*)\\s(\\w*)\\s(\\d+)\\s(\\d\\D)");
+                matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    piece = createPiece(matcher.group(1), matcher.group(2));
+                    int row = Character.getNumericValue(matcher.group(4).charAt(0));
+                    char col = matcher.group(4).charAt(1);
+                    int key = Integer.parseInt(matcher.group(3));
+                    Board.getSquare(row, col).setPiece(piece);
+                    entry.put(key, piece);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        piece = new King(Color.WHITE);
-        Board.getSquare(8, 'd').setPiece(piece);
-        entry.put(21, piece);
-
-        piece = new Queen(Color.WHITE);
-        Board.getSquare(8, 'e').setPiece(piece);
-        entry.put(22, piece);
-
-        piece = new Bishop(Color.WHITE);
-        Board.getSquare(8, 'c').setPiece(piece);
-        entry.put(23, piece);
-
-        piece = new Bishop(Color.WHITE);
-        Board.getSquare(8, 'f').setPiece(piece);
-        entry.put(24, piece);
-
-        piece = new Knight(Color.WHITE);
-        Board.getSquare(8, 'b').setPiece(piece);
-        entry.put(25, piece);
-
-        piece = new Knight(Color.WHITE);
-        Board.getSquare(8, 'g').setPiece(piece);
-        entry.put(26, piece);
-
-        piece = new Rook(Color.WHITE);
-        Board.getSquare(8, 'a').setPiece(piece);
-        entry.put(27, piece);
-
-        piece = new Rook(Color.WHITE);
-        Board.getSquare(8, 'h').setPiece(piece);
-        entry.put(28, piece);
-
-        for (int i = 1; i < vertexCount; i++) {
-            piece = new Pawn(Color.WHITE);
-            Board.getSquare(7, calculateCoor(i)).setPiece(piece);
-            entry.put(28+i, piece);
-        }
-
         pieces.putAll(entry);
+    }
+
+
+    /**
+     * Metoda ulozi rozehranou sachovnici do souboru
+     *
+     * @author xnguye17
+     * @version etapa 4
+     */
+    public static void saveBoard() {
+        try (var w = new FileWriter("texts/piecesSavedLayout.txt")) {
+            String pieceType;
+            String pieceColor;
+            String pieceKey;
+            String pieceCoors;
+            for (int i = 1; i <= 36; i++ ) {
+                if (pieces.get(i) != null) {
+                    pieceType = ("" + pieces.get(i).getPieceType()).toLowerCase();
+                    pieceColor = ("" + pieces.get(i).getPieceColor()).toLowerCase();
+                    pieceKey = String.valueOf(i);
+                    pieceCoors = String.format("%s%s", pieces.get(i).getSquare().getRow(), pieces.get(i).getSquare().getCol());
+                    w.write(String.format("%s\t%s\t%s\t%s\n", pieceType, pieceColor, pieceKey, pieceCoors));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
