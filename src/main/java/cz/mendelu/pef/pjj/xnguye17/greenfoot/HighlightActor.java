@@ -7,8 +7,12 @@ import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
 
-import java.awt.*;
-
+/**
+ * (greenfoot) trida zvyraznuje dostupna policka nakliknutych figurek (v toggle modu).
+ *
+ * @author xnguye17
+ * @version etapa 4
+ */
 public class HighlightActor extends Actor {
     private final Square square;
     private Piece piece;

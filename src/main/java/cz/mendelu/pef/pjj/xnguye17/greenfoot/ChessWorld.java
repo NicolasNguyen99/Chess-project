@@ -1,55 +1,84 @@
 package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
-import cz.mendelu.pef.pjj.xnguye17.Color;
+import cz.mendelu.pef.pjj.xnguye17.Board;
 import cz.mendelu.pef.pjj.xnguye17.Game;
-import greenfoot.Greenfoot;
+import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
+import greenfoot.Actor;
+import greenfoot.GreenfootImage;
 import greenfoot.World;
 
 import java.awt.*;
+import java.util.Map;
 
+/**
+ * TODO Predelat vetsinu trid do anonymnich trid, opravit countDown (asi vyuziti vlaken)
+ *
+ * @author xnguye17
+ */
 public class ChessWorld extends World {
 
     public ChessWorld() {
-        super(10, 8, 75);
-        setBackground("images/Board.png");
+        super(11, 8, 75);
+        setBackground("images/board.png");
 
         Game game = new Game();
         game.prepareGame();
+        Map<Integer, Piece> pieces = Board.getPieces();
 
-        //vygenerovani policek
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if ((row%2 == 0 && col%2 == 0) || (row%2 != 0 && col%2 != 0))
-                    addObject(new SquareActor(Color.WHITE, row, col), col, row);
-                else
-                    addObject(new SquareActor(Color.BLACK, row, col), col, row);
+        //Graficke rozmisteni figurek na sachovnici
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                if (Board.getSquare(row, col).getPiece() != null) {
+                    addObject(new PieceActor(row, col), col-1, 9-row-1);
+                }
             }
         }
 
-        //Rozmisteni bilych figurek na sachovnici
-        for (int col = 0; col < 8; col++) {
-            for (int row = 0; row < 2; row++) { //prehodit na 1 pri zkouseni, zpet na 2
-                addObject(new PieceActor(row, col), col, row);
+        /**
+         * (greenfoot) anonymni trida, ktera zobazuje jmeno hrace.
+         *
+         * @author xnguye17
+         * @version etapa 4
+         */
+        addObject(new Actor() {
+            {
+                var image = new GreenfootImage(game.getPlayers()[0].getName(), 24, Color.BLACK, new Color(0, 0, 0, 0));
+                setImage(image);
             }
-        }
-
-        //Rozmisteni cernych figurek na sachovnici
-        for (int col = 0; col < 8; col++) {
-            for (int row = 7; row > 5; row--) { //prechodit na 6 pri zkouseni, zpet na 5
-                addObject(new PieceActor(row, col), col, row);
+        },9, 0);
+        addObject(new Actor() {
+            {
+                var image = new GreenfootImage(game.getPlayers()[1].getName(), 24, Color.BLACK, new Color(0, 0, 0, 0));
+                setImage(image);
             }
-        }
+        },9, 7);
 
-        //zobrazeni jmena hracu (prozatim jmeno kostruktorem)
-        addObject(new LabelActor(game.getPlayers()[0]), 9, 0);
-        addObject(new LabelActor(game.getPlayers()[1]), 9, 7);
+        /**
+         * (greenfoot) anonymni trida, vykresluje barvu hrace.
+         *
+         * @author xnguye17
+         * @version etapa 4
+         */
+        addObject(new Actor() {
+            {
+                setImage(String.format("images/playerColors/%s.png", game.getPlayers()[0].getPieceColor()));
+            }
+        }, 8, 0);
+        addObject(new Actor() {
+            {
+                setImage(String.format("images/playerColors/%s.png", game.getPlayers()[1].getPieceColor()));
+            }
+        }, 8, 7);
 
-        //zobrazeni barvy hracu
-        addObject(new PlayerColorActor(game.getPlayers()[0]), 8, 0);
-        addObject(new PlayerColorActor(game.getPlayers()[1]), 8, 7);
+        //zvyrazneni hrace na tahu
+        addObject(new PlayerHighlightActor(), 8, 0);
+        addObject(new PlayerHighlightActor(), 8, 7);
 
-        //countdown
-        addObject(new TimerActor(), 9, 3);
+        //zobrazeni countdown (Bude upraveno)
+        //addObject(new TimerActor(), 9, 3);
         addObject(new TimerActor(), 9, 4);
+
+        //zobrazeni menu
+        addObject(new MenuButtonActor(game), 9, 6);
     }
 }
