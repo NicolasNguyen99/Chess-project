@@ -5,7 +5,6 @@ import cz.mendelu.pef.pjj.xnguye17.Square;
 import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
-import greenfoot.GreenfootImage;
 
 /**
  * (greenfoot) trida zvyraznuje dostupna policka nakliknutych figurek (v toggle modu).
@@ -15,12 +14,12 @@ import greenfoot.GreenfootImage;
  */
 public class HighlightActor extends Actor {
     private final Square square;
-    private Piece piece;
+    private final Piece piece;
 
     public HighlightActor(Piece oldPiece, Square futureSquare) {
         this.square = futureSquare;
         this.piece = oldPiece;
-        var image = new GreenfootImage("images/squares/highlight.png");
+        var image  = square.getPiece() == null ? "images/squares/highlight.png" : "images/squares/highlightEnemy.png";
         setImage(image);
     }
 

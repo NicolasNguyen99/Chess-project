@@ -18,7 +18,7 @@ import java.util.Map;
  * @version etapa 4
  */
 public class PieceActor extends Actor {
-    private final Piece piece;
+    private Piece piece;
     private int row;
     private int col;
 
@@ -36,7 +36,7 @@ public class PieceActor extends Actor {
 
     @Override
     public void act() {
-        if (Greenfoot.mouseClicked(this)) {
+        if (Greenfoot.mouseClicked(this) && piece.getPieceColor() == Board.getPlayerRound()) {
             //zmena stavu IsChosed u vsech ostatnich figurek na false
             Map<Integer, Piece> pieces = Board.getPieces();
             for (int i = 1; i <= 36; i++ ) {
@@ -64,6 +64,12 @@ public class PieceActor extends Actor {
                 ((Pawn)piece).switchIsFirstMove();
             }
             piece.setChangedPosition(null);
+        }
+
+        //kontrola vymazani figurky
+        if (!Board.getPieces().containsValue(piece)) {
+            System.out.println(Board.getSquare(row, col).getPiece());
+            getWorld().removeObject(this);
         }
     }
 }

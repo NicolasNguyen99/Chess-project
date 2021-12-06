@@ -2,6 +2,7 @@ package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
 import cz.mendelu.pef.pjj.xnguye17.Game;
 import greenfoot.Actor;
+import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
 
 import java.awt.*;
@@ -23,6 +24,7 @@ public class SaveGameActor extends Actor {
 
     @Override
     public void act() {
-        game.saveGame();
+        if (Greenfoot.mouseClicked(this))
+            game.saveGame();
     }
 }
