@@ -16,7 +16,7 @@ class KnightTest {
     void availableMovement() {
         //setup
         Board.createBoard();
-        var piece = new Knight(Color.WHITE);
+        var piece = new Knight(Color.WHITE, 10);
         var square = Board.getSquare(6, 'a');
         square.setPiece(piece);
         var square8B = new Square(8, 'b');

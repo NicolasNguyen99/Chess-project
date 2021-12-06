@@ -17,12 +17,12 @@ class GameTest {
     @Test
     void isGameOver_mat() {
         //setup
-        Game game = new Game();
-        game.prepareGame();
+        Game game = new Game("TestGame");
+        game.prepareGame("");
         Square square1 = Board.getSquare(8, 'd');
         Square square2 = Board.getSquare(6, 'c');
-        King king = new King(Color.WHITE);
-        Knight knight = new Knight(Color.BLACK);
+        King king = new King(Color.WHITE, 10);
+        Knight knight = new Knight(Color.BLACK, 10);
         square1.setPiece(king);
         square2.setPiece(knight);
         //when

@@ -14,7 +14,7 @@ class SquareTest {
     void setPiece() {
         //setup
         var square = Board.getSquare(1, 'a');
-        var piece = new King(Color.WHITE);
+        var piece = new King(Color.WHITE, 10);
         //when
         square.setPiece(piece);
         //then

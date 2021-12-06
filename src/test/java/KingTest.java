@@ -16,7 +16,7 @@ class KingTest {
     void availableMovement() {
         //setup
         Board.createBoard();
-        var piece = new King(Color.WHITE);
+        var piece = new King(Color.WHITE, 10);
         var square = Board.getSquare(1, 'd');
         square.setPiece(piece);
         var square1C = new Square(1, 'c');

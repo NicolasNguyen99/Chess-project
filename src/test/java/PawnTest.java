@@ -16,7 +16,7 @@ class PawnTest {
     void availableMovement() {
         //setup
         Board.createBoard();
-        Pawn piece = new Pawn(Color.BLACK);
+        Pawn piece = new Pawn(Color.BLACK, 10);
         Square square = Board.getSquare(5, 'h');
         square.setPiece(piece);
         var square6H = new Square(6, 'h');
