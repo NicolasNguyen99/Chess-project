@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Knight extends Piece {
 
-    public Knight(Color pieceColor) {
-        super(pieceColor, PieceType.KNIGHT);
+    public Knight(Color pieceColor, int key) {
+        super(pieceColor, PieceType.KNIGHT, key);
     }
     /**
      * @author xnguye17

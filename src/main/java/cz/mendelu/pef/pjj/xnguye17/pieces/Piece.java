@@ -5,8 +5,6 @@ import cz.mendelu.pef.pjj.xnguye17.Square;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Piece {
     private Color pieceColor;
@@ -15,14 +13,16 @@ public abstract class Piece {
     private boolean isChosed;
     private boolean isAlive;
     private Square changedPosition;
+    private int key;
 
-    public Piece(Color pieceColor, PieceType pieceType){
+    public Piece(Color pieceColor, PieceType pieceType, int key){
         this.pieceColor = pieceColor;
         this.pieceType = pieceType;
         this.square = null;
         this.isChosed = false;
         this.isAlive = true;
         this.changedPosition = null;
+        this.key = key;
     }
 
     /**
@@ -78,6 +78,9 @@ public abstract class Piece {
      * @author xnguye17
      */
     public void moveTo(int row, char col) {
+        if (Board.getSquare(row, col).getPiece() != null)
+            capturePiece(Board.getSquare(row, col));
+
         square.removePiece();
         this.setSquare(row, col);
         square.setPiece(this);
@@ -117,5 +120,14 @@ public abstract class Piece {
 
     public boolean getIsChosed() {
         return this.isChosed;
+    }
+
+    public void capturePiece(Square capturedSquare) {
+        Board.removePiece(capturedSquare.getPiece());
+        capturedSquare.removePiece();
+    }
+
+    public int getKey() {
+        return this.key;
     }
 }

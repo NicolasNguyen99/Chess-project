@@ -13,8 +13,8 @@ public class Queen extends Piece {
      * TODO opravit pohyb
      * @author xnguye17
      */
-    public Queen(Color pieceColor) {
-        super(pieceColor, PieceType.QUEEN);
+    public Queen(Color pieceColor, int key) {
+        super(pieceColor, PieceType.QUEEN, key);
     }
 
     @Override

@@ -20,8 +20,8 @@ public class Bishop extends Piece {
         void testCondition();
     }
 
-    public Bishop(Color pieceColor) {
-        super(pieceColor, PieceType.BISHOP);
+    public Bishop(Color pieceColor, int key) {
+        super(pieceColor, PieceType.BISHOP, key);
     }
 
     @Override

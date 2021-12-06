@@ -7,8 +7,8 @@ import java.util.List;
 public class Pawn extends Piece {
     private boolean isFirstMove;
 
-    public Pawn(Color pieceColor) {
-        super(pieceColor, PieceType.PAWN);
+    public Pawn(Color pieceColor, int key) {
+        super(pieceColor, PieceType.PAWN, key);
         this.isFirstMove = true;
     }
     /**
@@ -26,21 +26,23 @@ public class Pawn extends Piece {
         else
             tBorder = (coor.row > 1) ? coor.row-1 : coor.row;
 
-        rBorder = (coor.col < 8) ? coor.col +1 : coor.col ;
-        lBorder = (coor.col  > 1) ? coor.col -1 : coor.col ;
+        rBorder = (coor.row != 8 && coor.row != 1 && coor.col < 8) ? coor.col +1 : coor.col ;
+        lBorder = (coor.row != 8 && coor.row != 1 && coor.col  > 1) ? coor.col -1 : coor.col ;
 
         List<Square> availableSquares = new ArrayList<>();
         //kontrola jestli je diagonalne vlevo o jedno enemy figurka
-        if ((Board.getSquare(tBorder, lBorder).getPiece() != null) && (Board.getSquare(tBorder, lBorder).getPiece().getPieceColor() != this.getPieceColor()))
+        if (!(tBorder == 9 || tBorder == 0) && (Board.getSquare(tBorder, lBorder).getPiece() != null) && (Board.getSquare(tBorder, lBorder).getPiece().getPieceColor() != this.getPieceColor())) {
             availableSquares.add(Board.getSquare(tBorder, lBorder));
-        //kontrola jestli je o policko vpred volne policko
-        if (isFirstMove) {
-            if (this.getPieceColor() == Color.BLACK && Board.getSquare(tBorder+1, coor.col).getPiece() == null)
-                availableSquares.add(Board.getSquare(tBorder+1, coor.col));
-            else if (Board.getSquare(tBorder-1, coor.col).getPiece() == null)
-                availableSquares.add(Board.getSquare(tBorder-1, coor.col));
         }
+
         if (Board.getSquare(tBorder, coor.col).getPiece() == null) {
+            //kontrola jestli je o policko vpred volne policko
+            if (isFirstMove) {
+                if (this.getPieceColor() == Color.BLACK && Board.getSquare(tBorder+1, coor.col).getPiece() == null)
+                    availableSquares.add(Board.getSquare(tBorder+1, coor.col));
+                else if (Board.getSquare(tBorder-1, coor.col).getPiece() == null)
+                    availableSquares.add(Board.getSquare(tBorder-1, coor.col));
+            }
             availableSquares.add(Board.getSquare(tBorder, coor.col));
         }
         //kontrola jestli je diagonalne vpravo o jedno enemy figurka
