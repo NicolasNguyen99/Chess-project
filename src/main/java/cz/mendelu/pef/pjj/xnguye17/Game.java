@@ -4,9 +4,11 @@ import cz.mendelu.pef.pjj.xnguye17.pieces.King;
 import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
 
 public class Game {
+    private final String gameName;
     private final Player[] players;
 
-    public Game() {
+    public Game(String gameName) {
+        this.gameName = gameName;
         players = new Player[2];
     }
 
@@ -15,10 +17,11 @@ public class Game {
      *
      * @author xnguye17
      */
-    public void prepareGame() {
-        Board.prepareGame();
+    public void prepareGame(String gameName) {
+        Board.prepareGame(gameName);
         players[0] = new Player("Player 1", Color.WHITE);
         players[1] = new Player("Player 2", Color.BLACK);
+        saveGame();
     }
 
     /**
@@ -57,6 +60,6 @@ public class Game {
     }
 
     public void saveGame() {
-        Board.saveBoard();
+        Board.saveBoard(gameName);
     }
 }

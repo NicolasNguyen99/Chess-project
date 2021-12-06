@@ -16,6 +16,7 @@ public class Board {
      * @author xnguye17
      */
     public static final int vertexCount = 9;
+    private static Color playerRound = Color.WHITE;
     private static final List<List<Square>> squares = new ArrayList<>(vertexCount);
     private static final Map<Integer, Piece> pieces = new HashMap<>();
 
@@ -81,9 +82,9 @@ public class Board {
      *
      * @author xnguye17
      */
-    public static void prepareGame(){
+    public static void prepareGame(String from){
         createBoard();
-        loadBoard();
+        loadBoard(from);
     }
 
     /**
@@ -119,27 +120,27 @@ public class Board {
         }
     }
 
-    private static Piece createPiece(String pieceType, String color){
+    private static Piece createPiece(String pieceType, String color, int key){
         Color pieceColor = Objects.equals(color, "black") ? Color.BLACK : Color.WHITE;
         Piece piece;
         switch (pieceType) {
             case "king":
-                piece = new King(pieceColor);
+                piece = new King(pieceColor, key);
                 break;
             case "queen":
-                piece = new Queen(pieceColor);
+                piece = new Queen(pieceColor, key);
                 break;
             case "rook":
-                piece = new Rook(pieceColor);
+                piece = new Rook(pieceColor, key);
                 break;
             case "knight":
-                piece = new Knight(pieceColor);
+                piece = new Knight(pieceColor, key);
                 break;
             case "pawn":
-                piece = new Pawn(pieceColor);
+                piece = new Pawn(pieceColor, key);
                 break;
             case "bishop":
-                piece = new Bishop(pieceColor);
+                piece = new Bishop(pieceColor, key);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + pieceType);
@@ -154,18 +155,22 @@ public class Board {
      * @author xnguye17
      * @version etapa 4
      */
-    private static void loadBoard() {
+    private static void loadBoard(String gameName) {
         Map<Integer, Piece> entry = new HashMap<>();
         Piece piece;
 
-        try (var r = new BufferedReader(new InputStreamReader(new FileInputStream("texts/piecesStartingLayout.txt"), StandardCharsets.UTF_8))) {
+        var savedGames = new File("texts").list();
+        assert savedGames != null;
+        System.out.println(gameName);
+        String confFileName = Arrays.asList(savedGames).contains(gameName) ? "texts/"+gameName : "texts/piecesStartingLayout.txt";
+        try (var r = new BufferedReader(new InputStreamReader(new FileInputStream(confFileName), StandardCharsets.UTF_8))) {
             Matcher matcher;
             String line;
             while ((line = r.readLine()) != null) {
                 var pattern = Pattern.compile("^(\\w*)\\s(\\w*)\\s(\\d+)\\s(\\d\\D)");
                 matcher = pattern.matcher(line);
                 if (matcher.find()) {
-                    piece = createPiece(matcher.group(1), matcher.group(2));
+                    piece = createPiece(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)));
                     int row = Character.getNumericValue(matcher.group(4).charAt(0));
                     char col = matcher.group(4).charAt(1);
                     int key = Integer.parseInt(matcher.group(3));
@@ -186,8 +191,8 @@ public class Board {
      * @author xnguye17
      * @version etapa 4
      */
-    public static void saveBoard() {
-        try (var w = new FileWriter("texts/piecesSavedLayout.txt")) {
+    public static void saveBoard(String gameName) {
+        try (var w = new FileWriter("texts/"+ gameName)) {
             String pieceType;
             String pieceColor;
             String pieceKey;
@@ -215,9 +220,10 @@ public class Board {
      * @author xnguye17
      */
     public static boolean movePiece(Piece piece, int row, char col) {
-        if (piece.availableMovement().contains(Board.getSquare(row, col))) {
+        if (piece.getPieceColor() == playerRound && piece.availableMovement().contains(Board.getSquare(row, col))) {
             piece.moveTo(row, col);
             piece.setChangedPosition(Board.getSquare(row, col));
+            switchPlayer();
             return true;
         } else
             return false;
@@ -225,6 +231,18 @@ public class Board {
 
     public static Map<Integer, Piece> getPieces() {
         return pieces;
+    }
+
+    public static void switchPlayer() {
+        playerRound = playerRound == Color.WHITE ? Color.BLACK : Color.WHITE;
+    }
+
+    public static void removePiece(Piece capturedPiece) {
+        pieces.remove(capturedPiece.getKey());
+    }
+
+    public static Color getPlayerRound() {
+        return playerRound;
     }
 
 }
