@@ -68,7 +68,6 @@ public class PieceActor extends Actor {
 
         //kontrola vymazani figurky
         if (!Board.getPieces().containsValue(piece)) {
-            System.out.println(Board.getSquare(row, col).getPiece());
             getWorld().removeObject(this);
         }
     }

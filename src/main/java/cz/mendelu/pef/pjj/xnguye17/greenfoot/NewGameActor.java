@@ -1,5 +1,6 @@
 package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
+import cz.mendelu.pef.pjj.xnguye17.greenfoot.worlds.ChessWorld;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
@@ -20,7 +21,7 @@ public class NewGameActor extends Actor {
             var gameName = Greenfoot.ask("Enter your game name:")+".txt";
             var savedGames = new File("texts").list();
             while (savedGames != null && Arrays.asList(savedGames).contains(gameName)) {
-                gameName = Greenfoot.ask(gameName + " is already taken, enter different game name:");
+                gameName = Greenfoot.ask(gameName + " is already taken, enter different game name:")+".txt";
             }
             ChessWorld chessWorld = new ChessWorld(gameName);
             Greenfoot.setWorld(chessWorld);

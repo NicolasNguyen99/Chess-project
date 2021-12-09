@@ -1,5 +1,7 @@
 package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
+import cz.mendelu.pef.pjj.xnguye17.Board;
+import cz.mendelu.pef.pjj.xnguye17.Player;
 import greenfoot.Actor;
 import greenfoot.GreenfootImage;
 
@@ -12,23 +14,25 @@ import java.awt.*;
  * @version etapa 4
  */
 public class TimerActor extends Actor {
-    private int time;
+    private final Player player;
 
-    public TimerActor() {
-        this.time = 3300;
-//        Greenfoot.setSpeed(18); //nelze pouzit, zpomaluje cely program
+    public TimerActor(Player player) {
+        this.player = player;
+        var image = new GreenfootImage(calculateTime(player.getRemainingTime()), 24, Color.BLACK, new Color(0, 0, 0, 0));
+        setImage(image);
+    }
+
+    @Override
+    public void act() {
+        if (player.getPieceColor() == Board.getPlayerRound()) {
+            var image = new GreenfootImage(calculateTime(player.getRemainingTime()), 24, Color.BLACK, new Color(0, 0, 0, 0));
+            setImage(image);
+        }
     }
 
     private String calculateTime(int time) {
         int minutes = time/60;
         int seconds = time - (minutes*60);
         return minutes + " : " + (seconds/10 == 0 ? "0" + seconds : seconds);
-    }
-
-    @Override
-    public void act() {
-        time--;
-        var image = new GreenfootImage(calculateTime(time), 24, Color.BLACK, new Color(0,0,0, 0));
-        setImage(image);
     }
 }

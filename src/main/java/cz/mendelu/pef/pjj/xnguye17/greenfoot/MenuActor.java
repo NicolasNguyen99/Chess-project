@@ -22,8 +22,10 @@ public class MenuActor extends Actor {
 
     public void act() {
         if (!isDisplayed) {
-            getWorld().addObject(new SaveGameActor(game), 9, 4);
-            getWorld().addObject(new ExitGameActor(game), 9, 5);
+            getWorld().addObject(new SaveGameActor(game), 9, 2);
+            getWorld().addObject(new BackToMainMenuActor(), 9, 3);
+            getWorld().addObject(new SurrenderActor(game), 9, 4);
+            getWorld().addObject(new ExitGameActor(), 9, 5);
             isDisplayed = true;
         }
     }

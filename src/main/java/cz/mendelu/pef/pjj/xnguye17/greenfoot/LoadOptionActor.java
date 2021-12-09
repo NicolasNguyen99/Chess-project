@@ -1,5 +1,6 @@
 package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
+import cz.mendelu.pef.pjj.xnguye17.greenfoot.worlds.ChessWorld;
 import greenfoot.Actor;
 import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;

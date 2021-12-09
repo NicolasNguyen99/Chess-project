@@ -14,10 +14,8 @@ import java.awt.*;
  * @version etapa 4
  */
 public class ExitGameActor extends Actor {
-    private final Game game;
 
-    public ExitGameActor(Game game) {
-        this.game = game;
+    public ExitGameActor() {
         var image = new GreenfootImage("Exit game", 24, Color.BLACK, new Color(0,0,0, 0));
         setImage(image);
     }
@@ -25,7 +23,7 @@ public class ExitGameActor extends Actor {
     @Override
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            game.endGame();
+            System.exit(0);
         }
     }
 }
