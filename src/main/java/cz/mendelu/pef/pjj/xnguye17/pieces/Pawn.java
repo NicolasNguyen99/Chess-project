@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private boolean isFirstMove;
+    private boolean isFirstMove = true;
 
     public Pawn(Color pieceColor, int key) {
         super(pieceColor, PieceType.PAWN, key);
-        this.isFirstMove = true;
     }
     /**
      * @author xnguye17
