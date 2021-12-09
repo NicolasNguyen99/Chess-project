@@ -1,4 +1,4 @@
-package cz.mendelu.pef.pjj.xnguye17.greenfoot;
+package cz.mendelu.pef.pjj.xnguye17.greenfoot.worlds;
 
 import greenfoot.World;
 
