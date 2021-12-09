@@ -1,4 +1,5 @@
 package cz.mendelu.pef.pjj.xnguye17;
+import cz.mendelu.pef.pjj.xnguye17.LAN.Lan;
 import cz.mendelu.pef.pjj.xnguye17.pieces.*;
 
 import java.io.*;
@@ -19,6 +20,9 @@ public class Board {
     private static Color playerRound = Color.WHITE;
     private static final List<List<Square>> squares = new ArrayList<>(vertexCount);
     private static final Map<Integer, Piece> pieces = new HashMap<>();
+    private static Player[] players = new Player[0];
+    private static String gameName;
+    private static boolean refreshGame = false;
 
     /**
      * Metoda ziska policko na sachovnici pomoci zadanych souradnic.
@@ -82,7 +86,8 @@ public class Board {
      *
      * @author xnguye17
      */
-    public static void prepareGame(String from){
+    public static void prepareGame(String from, Player[] player){
+        players = player;
         createBoard();
         loadBoard(from);
     }
@@ -94,6 +99,7 @@ public class Board {
      * @version etapa 3
      */
     public static void createBoard() {
+        squares.clear();
         //inicializace prazdne matice
         for (int i = 0; i < vertexCount; i++) {
             squares.add(new ArrayList<>(vertexCount));
@@ -158,11 +164,11 @@ public class Board {
     private static void loadBoard(String gameName) {
         Map<Integer, Piece> entry = new HashMap<>();
         Piece piece;
+        pieces.clear();
 
         var savedGames = new File("texts").list();
         assert savedGames != null;
-        System.out.println(gameName);
-        String confFileName = Arrays.asList(savedGames).contains(gameName) ? "texts/"+gameName : "texts/piecesStartingLayout.txt";
+        String confFileName = Arrays.asList(savedGames).contains(gameName) ? "texts/"+gameName : "texts/piecesStartingLayout";
         try (var r = new BufferedReader(new InputStreamReader(new FileInputStream(confFileName), StandardCharsets.UTF_8))) {
             Matcher matcher;
             String line;
@@ -174,6 +180,12 @@ public class Board {
                     int row = Character.getNumericValue(matcher.group(4).charAt(0));
                     char col = matcher.group(4).charAt(1);
                     int key = Integer.parseInt(matcher.group(3));
+                    if(PieceType.valueOf(matcher.group(1).toUpperCase()) == PieceType.PAWN) {
+                        if((Color.valueOf(matcher.group(2).toUpperCase()) == Color.WHITE && Board.getSquare(row, col).getRow() != 7) ||
+                                (Color.valueOf(matcher.group(2).toUpperCase()) == Color.BLACK && Board.getSquare(row, col).getRow() != 2)) {
+                            ((Pawn)piece).switchIsFirstMove();
+                        }
+                    }
                     Board.getSquare(row, col).setPiece(piece);
                     entry.put(key, piece);
                 }
@@ -193,6 +205,8 @@ public class Board {
      */
     public static void saveBoard(String gameName) {
         try (var w = new FileWriter("texts/"+ gameName)) {
+            w.write(String.format("%s\t%s\t%d\t%s\n", players[0].getName(), players[0].getPieceColor(), players[0].getRemainingTime(), playerRound));
+            w.write(String.format("%s\t%s\t%d\t%s\n", players[1].getName(), players[1].getPieceColor(), players[1].getRemainingTime(), playerRound));
             String pieceType;
             String pieceColor;
             String pieceKey;
@@ -206,6 +220,7 @@ public class Board {
                     w.write(String.format("%s\t%s\t%s\t%s\n", pieceType, pieceColor, pieceKey, pieceCoors));
                 }
             }
+            w.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -224,6 +239,8 @@ public class Board {
             piece.moveTo(row, col);
             piece.setChangedPosition(Board.getSquare(row, col));
             switchPlayer();
+            checkEndGame();
+            Lan.getClient().send();
             return true;
         } else
             return false;
@@ -235,14 +252,62 @@ public class Board {
 
     public static void switchPlayer() {
         playerRound = playerRound == Color.WHITE ? Color.BLACK : Color.WHITE;
+        saveBoard(gameName);
+        players[0].startCountdown();
+        players[1].startCountdown();
     }
 
     public static void removePiece(Piece capturedPiece) {
-        pieces.remove(capturedPiece.getKey());
+        Piece removedPiece = pieces.remove(capturedPiece.getKey());
+        if(removedPiece.getPieceType() == PieceType.KING) {
+            if(removedPiece.getPieceColor() == Color.WHITE)
+                players[0].killKing();
+            else
+                players[1].killKing();
+        }
     }
 
     public static Color getPlayerRound() {
         return playerRound;
     }
 
+    public static void checkEndGame() {
+        Player winner = null;
+        String quote = "";
+        //surrender check
+        if (players[0].getWantSurrender() || players[1].getWantSurrender()) {
+            winner = players[0].getWantSurrender() ? players[1] : players[0];
+            quote = " surrendered";
+        //king alive check
+        } else if (!(players[0].hasKing() && players[1].hasKing())) {
+            winner = players[0].hasKing() ? players[0] : players[1];
+            quote = " king was killed";
+        //time check
+        } else if (players[0].getRemainingTime() <= 0 || players[1].getRemainingTime() <= 0) {
+            winner = players[0].getRemainingTime() <= 0 ? players[1] : players[0];
+            quote = " reached time limit";
+        }
+        if (winner != null)
+            endGame(new End(quote, winner));
+    }
+
+    public static void endGame(End end) {
+        end.getWhoWon().playerWon();
+    }
+
+    public static void setPlayerRound(Color color) {
+        playerRound = color;
+    }
+
+    public static void setGameName(String gameName) {
+        Board.gameName = gameName;
+    }
+
+    public static boolean getRefreshGame() {
+        return refreshGame;
+    }
+
+    public static void switchResreshGame() {
+        refreshGame = !refreshGame;
+    }
 }

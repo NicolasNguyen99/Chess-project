@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Board.createBoard();
-        Knight knight = new Knight(Color.WHITE);
+        Knight knight = new Knight(Color.WHITE, 10);
         Square square = Board.getSquare(6, 'a');
         square.setPiece(knight);
         System.out.println(knight);
