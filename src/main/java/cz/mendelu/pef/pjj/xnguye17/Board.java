@@ -205,8 +205,8 @@ public class Board {
      */
     public static void saveBoard(String gameName) {
         try (var w = new FileWriter("texts/"+ gameName)) {
-            w.write(String.format("%s\t%s\t%d\t%s\n", players[0].getName(), players[0].getPieceColor(), players[0].getRemainingTime(), playerRound));
-            w.write(String.format("%s\t%s\t%d\t%s\n", players[1].getName(), players[1].getPieceColor(), players[1].getRemainingTime(), playerRound));
+            w.write(String.format("%s\t%s\t%d\t%s\t%s\n", players[0].getName(), players[0].getPieceColor(), players[0].getRemainingTime(), playerRound, players[0].hasWon()));
+            w.write(String.format("%s\t%s\t%d\t%s\t%s\n", players[1].getName(), players[1].getPieceColor(), players[1].getRemainingTime(), playerRound, players[1].hasWon()));
             String pieceType;
             String pieceColor;
             String pieceKey;
@@ -220,7 +220,6 @@ public class Board {
                     w.write(String.format("%s\t%s\t%s\t%s\n", pieceType, pieceColor, pieceKey, pieceCoors));
                 }
             }
-            w.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -238,8 +237,8 @@ public class Board {
         if (piece.getPieceColor() == playerRound && piece.availableMovement().contains(Board.getSquare(row, col))) {
             piece.moveTo(row, col);
             piece.setChangedPosition(Board.getSquare(row, col));
-            switchPlayer();
             checkEndGame();
+            switchPlayer();
             Lan.getClient().send();
             return true;
         } else
@@ -272,27 +271,33 @@ public class Board {
     }
 
     public static void checkEndGame() {
-        Player winner = null;
-        String quote = "";
+        int winner = -1;
         //surrender check
         if (players[0].getWantSurrender() || players[1].getWantSurrender()) {
-            winner = players[0].getWantSurrender() ? players[1] : players[0];
-            quote = " surrendered";
+            if (players[0].getWantSurrender()) {
+                winner = 1;
+            } else {
+                winner = 0;
+            }
         //king alive check
         } else if (!(players[0].hasKing() && players[1].hasKing())) {
-            winner = players[0].hasKing() ? players[0] : players[1];
-            quote = " king was killed";
+            if (players[0].hasKing()) {
+                winner = 0;
+            } else {
+                winner = 1;
+            }
         //time check
         } else if (players[0].getRemainingTime() <= 0 || players[1].getRemainingTime() <= 0) {
-            winner = players[0].getRemainingTime() <= 0 ? players[1] : players[0];
-            quote = " reached time limit";
+            if (players[0].getRemainingTime() <= 0)
+                winner = 1;
+            if (players[1].getRemainingTime() <= 0)
+                winner = 0;
         }
-        if (winner != null)
-            endGame(new End(quote, winner));
-    }
 
-    public static void endGame(End end) {
-        end.getWhoWon().playerWon();
+        if (winner != -1) {
+            players[winner].playerWon();
+//            Lan.getClient().send();
+        }
     }
 
     public static void setPlayerRound(Color color) {

@@ -1,7 +1,7 @@
 package cz.mendelu.pef.pjj.xnguye17;
 
 public class Player {
-    private final String name;
+    private String name;
     private final Color color;
     private boolean hasKing;
     private boolean wantSurrender;
@@ -61,5 +61,9 @@ public class Player {
 
     public boolean hasWon() {
         return hasWon;
+    }
+
+    public void setPlayerName(String playerName) {
+        name = playerName;
     }
 }

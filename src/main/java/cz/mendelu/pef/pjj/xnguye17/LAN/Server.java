@@ -13,28 +13,22 @@ public class Server extends Thread{
     private final Game game;
     private int port;
 
-//    private ChessWorld chessGame;
-
     public Server(Game game) {
         this.game = game;
         choosePort();
-//        this.chessGame = chessGame;
     }
 
     @Override
     public void run() {
         try {
             var ss = new ServerSocket(port);
-            System.out.println("Server is running on port: " + port);
 
             while(!isInterrupted()) {
                 var cs = ss.accept();
-                System.out.println("Client accepted: " + cs);
 
                 try (var dis = new DataInputStream(cs.getInputStream())) {
                     String str = dis.readUTF();
-                    System.out.println(str);
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("texts/" + game.getGamename(), false));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("texts/" + game.getGamename()));
                     writer.write(str);
                     writer.close();
                     game.prepareGame(game.getGamename());

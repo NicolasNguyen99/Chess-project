@@ -24,7 +24,6 @@ public class Client {
         try {
             var s = new Socket("127.0.0.1", port);
             try (var dout = new DataOutputStream(s.getOutputStream())) {
-                System.out.println(game.getGamename());
                 dout.writeUTF(Files.readString(Path.of("texts/" + game.getGamename())));
                 dout.flush();
             } catch (IOException e) {

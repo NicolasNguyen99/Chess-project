@@ -8,7 +8,7 @@ import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
 
 public class SurrenderActor extends Actor {
-    private Game game;
+    private final Game game;
     public SurrenderActor(Game game) {
         this.game = game;
         var image = new GreenfootImage("Surrender", 24, java.awt.Color.BLACK, new java.awt.Color(0,0,0, 0));
@@ -18,7 +18,7 @@ public class SurrenderActor extends Actor {
     @Override
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            if (Board.getPlayerRound() == Color.WHITE)
+            if (game.getPlayerColor() == Color.WHITE)
                 game.getPlayers()[0].wantSurrender();
             else
                 game.getPlayers()[1].wantSurrender();

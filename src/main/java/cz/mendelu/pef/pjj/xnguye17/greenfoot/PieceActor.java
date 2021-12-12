@@ -1,6 +1,7 @@
 package cz.mendelu.pef.pjj.xnguye17.greenfoot;
 
 import cz.mendelu.pef.pjj.xnguye17.Board;
+import cz.mendelu.pef.pjj.xnguye17.Game;
 import cz.mendelu.pef.pjj.xnguye17.pieces.Pawn;
 import cz.mendelu.pef.pjj.xnguye17.pieces.Piece;
 import cz.mendelu.pef.pjj.xnguye17.pieces.PieceType;
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 public class PieceActor extends Actor {
     private Piece piece;
+    private Game game;
     private int row;
     private int col;
 
@@ -26,7 +28,8 @@ public class PieceActor extends Actor {
         return 9 - num;
     }
 
-    public PieceActor(int row, int col) {
+    public PieceActor(Game game, int row, int col) {
+        this.game = game;
         this.row = row;
         this.col = col;
         piece = Board.getSquare(this.row, Board.calculateCoor(this.col)).getPiece();
@@ -36,7 +39,7 @@ public class PieceActor extends Actor {
 
     @Override
     public void act() {
-        if (Greenfoot.mouseClicked(this) && piece.getPieceColor() == Board.getPlayerRound()) {
+        if (Greenfoot.mouseClicked(this) && piece.getPieceColor() == Board.getPlayerRound() && piece.getPieceColor() == game.getPlayerColor()) {
             //zmena stavu IsChosed u vsech ostatnich figurek na false
             Map<Integer, Piece> pieces = Board.getPieces();
             for (int i = 1; i <= 36; i++ ) {
@@ -60,9 +63,6 @@ public class PieceActor extends Actor {
             this.setLocation(Board.calculateCoor(piece.getChangedPosition().getCol())-1, inverseInt(piece.getChangedPosition().getRow()+1));
             this.row = piece.getChangedPosition().getRow();
             this.col = Board.calculateCoor(piece.getChangedPosition().getCol());
-            if (piece.getPieceType() == PieceType.PAWN && ((Pawn)piece).getIsFirstMove()) {
-                ((Pawn)piece).switchIsFirstMove();
-            }
             piece.setChangedPosition(null);
         }
 

@@ -2,10 +2,12 @@ package cz.mendelu.pef.pjj.xnguye17.pieces;
 import cz.mendelu.pef.pjj.xnguye17.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
     private boolean isFirstMove = true;
+    private boolean isOnEnd = false;
 
     public Pawn(Color pieceColor, int key) {
         super(pieceColor, PieceType.PAWN, key);
@@ -51,11 +53,40 @@ public class Pawn extends Piece {
         return availableSquares;
     }
 
+    @Override
+    public void moveTo(int row, char col) {
+        super.moveTo(row, col);
+        if (getIsFirstMove())
+            switchIsFirstMove();
+        else if (row == 8 || row == 1) {
+            changePawn(PieceType.QUEEN);
+        }
+    }
+
     public boolean getIsFirstMove() {
         return isFirstMove;
     }
 
     public void switchIsFirstMove() {
         isFirstMove = false;
+    }
+
+    public void changePawn(PieceType pieceType) {
+        if (pieceType == PieceType.QUEEN) {
+            int key = getPieceColor() == Color.WHITE ? 22 : 2;
+            if (!Board.getPieces().containsKey(key)) {
+                Piece piece = new Queen(Board.getPieces().get(getKey()).getPieceColor(), key);
+                int row, col;
+                row = Board.getPieces().get(getKey()).getSquare().getRow();
+                col = Board.calculateCoor(Board.getPieces().get(getKey()).getSquare().getCol());
+                Board.removePiece(Board.getPieces().get(getKey()));
+                Board.getPieces().put(key, piece);
+                Board.getSquare(row, col).setPiece(piece);
+                Board.switchResreshGame();
+            } else {
+                System.out.println("You already have queen");
+            }
+        }
+
     }
 }
